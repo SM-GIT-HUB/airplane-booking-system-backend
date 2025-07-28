@@ -1,4 +1,4 @@
-import { info as InfoController } from "./info-controller.js"
+import * as InfoController from "./info-controller.js"
 
 export {
     InfoController
