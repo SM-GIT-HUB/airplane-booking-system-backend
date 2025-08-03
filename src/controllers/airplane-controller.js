@@ -4,6 +4,10 @@ const { StatusCodes } = require('http-status-codes')
 
 const { SuccessResponse, ErrorResponse } = require('../utils/common');
 
+/*
+ POST: /airplanes
+ req-body { modelNumber: "some-model-name", capacity: some-integer (200) }
+*/
 async function createAirplane(req, res)
 {
     try {
@@ -24,6 +28,10 @@ async function createAirplane(req, res)
     }
 }
 
+/*
+ GET: /airplanes
+ req-body {}
+*/
 async function getAirplanes(req, res)
 {
     try {
@@ -40,8 +48,29 @@ async function getAirplanes(req, res)
     }
 }
 
+/*
+ GET: /airplanes/:id
+ req-body {}
+*/
+async function getAirplane(req, res)
+{
+    try {
+        const airplanes = await AirplaneService.getAirplane(req.params.id);
+
+        SuccessResponse.message = "Successfully fetched the data of airplane";
+        SuccessResponse.data = airplanes;
+
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    }
+    catch(err) {
+        ErrorResponse.error = err;
+        return res.status(err.statusCode).json(ErrorResponse);
+    }
+}
+
 
 module.exports = {
     createAirplane,
-    getAirplanes
+    getAirplanes,
+    getAirplane
 }
