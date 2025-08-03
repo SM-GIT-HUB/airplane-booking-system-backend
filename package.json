@@ -1,10 +1,10 @@
 {
-  "name": "base-nodejs-template",
+  "name": "ticket-backend",
   "version": "1.0.0",
-  "description": "Node js backend",
+  "description": "Airplane booking system",
   "license": "ISC",
   "author": "Soumik",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "dev": "node --watch src/index.js"

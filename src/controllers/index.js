@@ -1,5 +1,5 @@
-import * as InfoController from "./info-controller.js"
 
-export {
-    InfoController
+module.exports = {
+    InfoController: require("./info-controller.js"),
+    AirplaneController: require("./airplane-controller.js")
 }
