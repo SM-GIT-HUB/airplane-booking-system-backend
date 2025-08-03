@@ -9,7 +9,8 @@ async function createAirplane(req, res)
     try {
         const airplane = await AirplaneService.createAirplane({
             modelNumber: req.body.modelNumber,
-            capacity: req.body.capacity
+            capacity: req.body.capacity,
+            id: req.body.id
         })
 
         SuccessResponse.message = "Successfully created an airplane";
@@ -23,6 +24,24 @@ async function createAirplane(req, res)
     }
 }
 
+async function getAirplanes(req, res)
+{
+    try {
+        const airplanes = await AirplaneService.getAirplanes();
+
+        SuccessResponse.message = "Successfully fetched the data of all airplanes";
+        SuccessResponse.data = airplanes;
+
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    }
+    catch(err) {
+        ErrorResponse.error = err;
+        return res.status(err.statusCode).json(ErrorResponse);
+    }
+}
+
+
 module.exports = {
-    createAirplane
+    createAirplane,
+    getAirplanes
 }
