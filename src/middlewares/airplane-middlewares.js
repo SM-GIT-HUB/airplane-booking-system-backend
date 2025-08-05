@@ -1,4 +1,3 @@
-
 const { StatusCodes } = require('http-status-codes')
 
 const { ErrorResponse } = require('../utils/common')
@@ -53,6 +52,7 @@ function validateUpdateRequest(req, res, next)
 
     next();
 }
+
 
 module.exports = {
     validateCreateRequest,

@@ -12,7 +12,7 @@ async function createAirplane(data)
         return airplane;
     }
     catch(err) {
-        if (err.name == "SequelizeValidationError")
+        if (err.name.includes("Sequelize"))
         {
             let explanation = [];
             err.errors.forEach((e) => {
@@ -22,7 +22,7 @@ async function createAirplane(data)
             throw new AppError(explanation, StatusCodes.BAD_REQUEST);
         }
 
-        throw new AppError("Cannot create a new Airplane Object", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(`Cannot create a new Airplane Object: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -33,7 +33,7 @@ async function getAirplanes()
         return airplanes;
     }
     catch(err) {
-        throw new AppError("Cannot fetch data of all airplanes", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(`Cannot fetch data of all airplanes: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -48,7 +48,7 @@ async function getAirplane(id)
             throw new AppError("The airplane you requested is not present", err.statusCode);
         }
 
-        throw new AppError("Cannot fetch data of airplane", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(`Cannot fetch data of airplane: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -63,7 +63,7 @@ async function updateAirplane(id, data)
             throw new AppError("The airplane you requested to update is not present", err.statusCode);
         }
 
-        throw new AppError("Cannot update data of airplane", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(`Cannot update data of airplane: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -78,7 +78,7 @@ async function deleteAirplane(id)
             throw new AppError("The airplane you requested to delete is not present", err.statusCode);
         }
 
-        throw new AppError("Cannot delete airplane", StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(`Cannot delete airplane: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
