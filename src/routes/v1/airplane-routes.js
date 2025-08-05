@@ -10,7 +10,7 @@ router.get('/:id', AirplaneController.getAirplane); // /api/v1/airplanes/:id GET
 
 router.post('/', AirplaneMiddlewares.validateCreateRequest, AirplaneController.createAirplane); // /api/v1/airplanes POST
 
-router.patch('/', AirplaneMiddlewares.validateUpdateRequest, AirplaneController.updateAirplane); // /api/v1/airplanes PATCH
+router.patch('/:id', AirplaneMiddlewares.validateUpdateRequest, AirplaneController.updateAirplane); // /api/v1/airplanes/:id PATCH
 
 router.delete('/:id', AirplaneController.deleteAirplane); // /api/v1/airplanes/:id DELETE
 

@@ -12,8 +12,7 @@ async function createAirplane(req, res)
     try {
         const airplane = await AirplaneService.createAirplane({
             modelNumber: req.body.modelNumber,
-            capacity: req.body.capacity,
-            id: req.body.id
+            capacity: req.body.capacity
         })
 
         SuccessResponse.message = "Successfully created an airplane";
@@ -74,7 +73,7 @@ async function getAirplane(req, res)
 async function updateAirplane(req, res)
 {
     try {
-        const airplane = await AirplaneService.updateAirplane(req.body.id, {
+        const airplane = await AirplaneService.updateAirplane(req.params.id, {
             capacity: req.body.capacity
         })
 

@@ -34,18 +34,10 @@ function validateUpdateRequest(req, res, next)
         return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
     }
 
-    if (!req.body.id)
+    if (!req.body.capacity || isNaN(req.body.capacity))
     {
         ErrorResponse.message = "Something went wrong while updating airplane";
-        ErrorResponse.error = new AppError(["id not found in the request"], StatusCodes.BAD_REQUEST);
-
-        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
-    }
-
-    if (!req.body.capacity)
-    {
-        ErrorResponse.message = "Something went wrong while updating airplane";
-        ErrorResponse.error = new AppError(["capacity not found in the request"], StatusCodes.BAD_REQUEST);
+        ErrorResponse.error = new AppError(["missing or invalid capacity in the request"], StatusCodes.BAD_REQUEST);
 
         return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
     }
