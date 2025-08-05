@@ -1,8 +1,12 @@
-const error = {
-    success: false,
-    message: "Something went wrong",
-    data: {},
-    error: {}
+
+class ErrorResponse {
+    constructor()
+    {
+        this.success = false;
+        this.message = "Something went wrong";
+        this.data = {};
+        this.error = {};
+    }
 }
 
-module.exports = error
+module.exports = ErrorResponse

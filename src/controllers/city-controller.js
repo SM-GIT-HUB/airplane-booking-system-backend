@@ -14,14 +14,17 @@ async function createCity(req, res)
             name: req.body.name
         })
 
-        SuccessResponse.message = "Successfully created a city";
-        SuccessResponse.data = city;
+        const successResponse = new SuccessResponse();
+        
+        successResponse.message = "Successfully created a city";
+        successResponse.data = city;
 
-        return res.status(StatusCodes.CREATED).json(SuccessResponse);
+        return res.status(StatusCodes.CREATED).json(successResponse);
     }
     catch(err) {
-        ErrorResponse.error = err;
-        return res.status(err.statusCode).json(ErrorResponse);
+        const errorResponse = new ErrorResponse();
+        errorResponse.error = err;
+        return res.status(err.statusCode).json(errorResponse);
     }
 }
 
@@ -34,14 +37,17 @@ async function deleteCity(req, res)
     try {
         const response = await CityService.deleteCity(req.params.id);
 
-        SuccessResponse.message = "Successfully deleted the city";
-        SuccessResponse.data = response;
+        const successResponse = new SuccessResponse();
+        
+        successResponse.message = "Successfully deleted the city";
+        successResponse.data = response;
 
-        return res.status(StatusCodes.CREATED).json(SuccessResponse);
+        return res.status(StatusCodes.CREATED).json(successResponse);
     }
     catch(err) {
-        ErrorResponse.error = err;
-        return res.status(err.statusCode).json(ErrorResponse);
+        const errorResponse = new ErrorResponse();
+        errorResponse.error = err;
+        return res.status(err.statusCode).json(errorResponse);
     }
 }
 
