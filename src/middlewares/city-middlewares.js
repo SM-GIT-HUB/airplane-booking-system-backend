@@ -26,7 +26,31 @@ function validateCreateRequest(req, res, next)
     next();
 }
 
+function validateUpdateRequest(req, res, next)
+{
+    if (!req.body)
+    {
+        const errorResponse = new ErrorResponse();
+        errorResponse.message = "Something went wrong while updating city";
+        errorResponse.error = new AppError(["request body not found in the request"], StatusCodes.BAD_REQUEST);
+
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+
+    if (!req.body.name)
+    {
+        const errorResponse = new ErrorResponse();
+        errorResponse.message = "Something went wrong while updating city";
+        errorResponse.error = new AppError(["missing or invalid name in the request"], StatusCodes.BAD_REQUEST);
+
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+
+    next();
+}
+
 
 module.exports = {
-    validateCreateRequest
+    validateCreateRequest,
+    validateUpdateRequest
 }

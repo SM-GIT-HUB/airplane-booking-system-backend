@@ -26,6 +26,31 @@ async function createCity(data)
     }
 }
 
+async function updateCity(id, data)
+{
+    try {
+        const city = await cityRepository.update(id, data);
+        return city;
+    }
+    catch(err) {
+        if (err.name.includes("Sequelize"))
+        {
+            let explanation = [];
+            err.errors.forEach((e) => {
+                explanation.push(e.message);
+            })
+            
+            throw new AppError(explanation, StatusCodes.BAD_REQUEST);
+        }
+        
+        if (err.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("The city you requested to update is not present", err.statusCode);
+        }
+
+        throw new AppError(`Cannot update data of city: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 async function deleteCity(id)
 {
     try {
@@ -44,5 +69,6 @@ async function deleteCity(id)
 
 module.exports = {
     createCity,
+    updateCity,
     deleteCity
 }

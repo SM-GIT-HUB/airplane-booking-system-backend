@@ -59,6 +59,16 @@ async function updateAirplane(id, data)
         return airplane;
     }
     catch(err) {
+        if (err.name.includes("Sequelize"))
+        {
+            let explanation = [];
+            err.errors.forEach((e) => {
+                explanation.push(e.message);
+            })
+            
+            throw new AppError(explanation, StatusCodes.BAD_REQUEST);
+        }
+
         if (err.statusCode == StatusCodes.NOT_FOUND) {
             throw new AppError("The airplane you requested to update is not present", err.statusCode);
         }

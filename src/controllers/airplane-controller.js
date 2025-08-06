@@ -76,8 +76,8 @@ async function getAirplane(req, res)
 }
 
 /*
- PATCH: /airplanes
- req-body { id: some-id (10), capacity: some-integer (100) }
+ PATCH: /airplanes/:id
+ req-body { capacity: some-integer (100) }
 */
 async function updateAirplane(req, res)
 {
