@@ -1,0 +1,34 @@
+
+const { City, Airport } = require('./models');
+const city = await City.findByPk(17);
+
+const airport = await Airport.create({
+    name: "Kandi Airport",
+    code: "KND",
+    cityId: 1,
+})
+const airport = await city.createAirport({
+    name: "Ruppur Airport",
+    code: "RPR"
+})
+
+const airports = await city.getAirports();
+
+const airport = await city.createAirport({
+    name: "Ruppur Airport",
+    code: "RPR"
+})
+
+await City.destroy({
+    where: {
+        id: 1
+    }
+})
+
+await City.update({name: "Bumbai"}, {
+    where: {
+        id: 17
+    }
+})
+
+console.log();
