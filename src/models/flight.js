@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Airport extends Model {
+  class Flight extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,48 +11,67 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.City, {
-        foreignKey: 'cityId',
+      this.belongsTo(models.Airplane, {
+        foreignKey: 'airplaneId',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       })
 
-      this.hasMany(models.Flight, {
+      this.belongsTo(models.Airport, {
         foreignKey: 'departureAirportId',
-        sourceKey: 'code',
+        targetKey: 'code',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       })
-
-      this.hasMany(models.Flight, {
+      
+      this.belongsTo(models.Airport, {
         foreignKey: 'arrivalAirportId',
-        sourceKey: 'code',
+        targetKey: 'code',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       })
     }
   }
-  Airport.init({
-    name: {
+  Flight.init({
+    flightNumber: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
-    code: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+    airplaneId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    address: {
+    departureAirportId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    arrivalAirportId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    departureTime: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    arrivalTime: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    boardingGate: {
       type: DataTypes.STRING,
     },
-    cityId: {
+    totalSeats: {
       type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Airport',
+    modelName: 'Flight',
   });
-  return Airport;
+  return Flight;
 };

@@ -5,9 +5,9 @@
   "license": "ISC",
   "author": "Soumik",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch src/server.js"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
