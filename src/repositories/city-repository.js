@@ -8,4 +8,5 @@ class CityRepository extends CrudRepository {
     }
 }
 
+
 module.exports = CityRepository

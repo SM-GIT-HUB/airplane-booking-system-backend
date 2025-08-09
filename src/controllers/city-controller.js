@@ -3,6 +3,8 @@ const { StatusCodes } = require('http-status-codes')
 
 const { SuccessResponse, ErrorResponse } = require('../utils/common')
 
+const cityService = new CityService();
+
 /*
  POST: /cities
  req-body { name: "some-city-name" }
@@ -10,7 +12,7 @@ const { SuccessResponse, ErrorResponse } = require('../utils/common')
 async function createCity(req, res)
 {
     try {
-        const city = await CityService.createCity({
+        const city = await cityService.create({
             name: req.body.name
         })
 
@@ -35,7 +37,7 @@ async function createCity(req, res)
 async function updateCity(req, res)
 {
     try {
-        const city = await CityService.updateCity(req.params.id, {
+        const city = await cityService.update(req.params.id, {
             name: req.body.name
         })
         
@@ -60,7 +62,7 @@ async function updateCity(req, res)
 async function deleteCity(req, res)
 {
     try {
-        const response = await CityService.deleteCity(req.params.id);
+        const response = await cityService.delete(req.params.id);
 
         const successResponse = new SuccessResponse();
         

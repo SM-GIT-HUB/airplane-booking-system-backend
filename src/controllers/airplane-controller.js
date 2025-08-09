@@ -3,6 +3,8 @@ const { StatusCodes } = require('http-status-codes')
 
 const { SuccessResponse, ErrorResponse } = require('../utils/common')
 
+const airplaneService = new AirplaneService();
+
 /*
  POST: /airplanes
  req-body { modelNumber: "some-model-name", capacity: some-integer (200) }
@@ -10,7 +12,7 @@ const { SuccessResponse, ErrorResponse } = require('../utils/common')
 async function createAirplane(req, res)
 {
     try {
-        const airplane = await AirplaneService.createAirplane({
+        const airplane = await airplaneService.create({
             modelNumber: req.body.modelNumber,
             capacity: req.body.capacity
         })
@@ -36,7 +38,7 @@ async function createAirplane(req, res)
 async function getAirplanes(req, res)
 {
     try {
-        const airplanes = await AirplaneService.getAirplanes();
+        const airplanes = await airplaneService.getAll();
         
         const successResponse = new SuccessResponse();
 
@@ -59,7 +61,7 @@ async function getAirplanes(req, res)
 async function getAirplane(req, res)
 {
     try {
-        const airplanes = await AirplaneService.getAirplane(req.params.id);
+        const airplanes = await airplaneService.get(req.params.id);
         
         const successResponse = new SuccessResponse();
 
@@ -82,7 +84,7 @@ async function getAirplane(req, res)
 async function updateAirplane(req, res)
 {
     try {
-        const airplane = await AirplaneService.updateAirplane(req.params.id, {
+        const airplane = await airplaneService.update(req.params.id, {
             capacity: req.body.capacity
         })
         
@@ -107,7 +109,7 @@ async function updateAirplane(req, res)
 async function deleteAirplane(req, res)
 {
     try {
-        const response = await AirplaneService.deleteAirplane(req.params.id);
+        const response = await airplaneService.delete(req.params.id);
         
         const successResponse = new SuccessResponse();
 
