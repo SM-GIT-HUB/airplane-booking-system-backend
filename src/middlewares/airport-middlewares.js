@@ -55,7 +55,7 @@ function validateUpdateRequest(req, res, next)
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
     }
 
-    if (!req.body.name && !req.body.code && !req.body.cityId)
+    if (!req.body.name && !req.body.code && !req.body.cityId && !req.body.address)
     {
         const errorResponse = new ErrorResponse();
         errorResponse.message = "Something went wrong while updating airport";
