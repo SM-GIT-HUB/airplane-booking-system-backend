@@ -18,9 +18,16 @@ class CrudService {
             if (err.name.includes("Sequelize"))
             {
                 let explanation = [];
-                err.errors.forEach((e) => {
-                    explanation.push(e.message);
-                })
+
+                if (err.errors)
+                {
+                    err.errors.forEach((e) => {
+                        explanation.push(e.message);
+                    })
+                }
+                else if (err.sqlMessage) {
+                    explanation.push(err.sqlMessage);
+                }
                 
                 throw new AppError(explanation, StatusCodes.BAD_REQUEST);
             }
@@ -65,9 +72,13 @@ class CrudService {
             if (err.name.includes("Sequelize"))
             {
                 let explanation = [];
-                err.errors.forEach((e) => {
-                    explanation.push(e.message);
-                })
+                
+                if (err.errors)
+                {
+                    err.errors.forEach((e) => {
+                        explanation.push(e.message);
+                    })
+                }
                 
                 throw new AppError(explanation, StatusCodes.BAD_REQUEST);
             }
