@@ -50,20 +50,35 @@ function validateCreateRequest(req, res, next)
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
     }
 
-    if (!req.body.departureTime)
+    const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+    
+    const deptTime = new Date(req.body.departureTime);
+
+    if (!req.body.departureTime || !dateRegex.test(req.body.departureTime) || isNaN(deptTime.getTime()))
     {
         const errorResponse = new ErrorResponse();
         errorResponse.message = "Something went wrong while creating flight";
-        errorResponse.error = new AppError(["departureTime not found in the request"], StatusCodes.BAD_REQUEST);
+        errorResponse.error = new AppError(["departureTime not found or invalid in the request"], StatusCodes.BAD_REQUEST);
+        
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+    
+    const arrvTime = new Date(req.body.arrivalTime);
+
+    if (!req.body.arrivalTime || !dateRegex.test(req.body.arrivalTime) || isNaN(arrvTime.getTime()))
+    {
+        const errorResponse = new ErrorResponse();
+        errorResponse.message = "Something went wrong while creating flight";
+        errorResponse.error = new AppError(["arrivalTime not found or invalid in the request"], StatusCodes.BAD_REQUEST);
         
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
     }
 
-    if (!req.body.arrivalTime)
+    if (deptTime.getTime() >= arrvTime.getTime())
     {
         const errorResponse = new ErrorResponse();
         errorResponse.message = "Something went wrong while creating flight";
-        errorResponse.error = new AppError(["arrivalTime not found in the request"], StatusCodes.BAD_REQUEST);
+        errorResponse.error = new AppError(["departureTime must be before arrivalTime"], StatusCodes.BAD_REQUEST);
         
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
     }

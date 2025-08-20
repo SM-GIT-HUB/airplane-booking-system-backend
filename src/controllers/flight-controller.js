@@ -7,7 +7,8 @@ const flightService = new FlightService();
 
 /*
  POST: /flights
- req-body { flightNumber: 'some-flight-number', airplaneId: some-airplaneId (10), departureAirportId: 'some-airplane-code', arrivalAirportId: 'some-airplane-code', departureTime: 'some-date', arrivalTime: 'some-time', price: some-price (1200), boardingGate: 'some-gate-name', totalSeats: some-seat-capacity (100) }
+ req-body { flightNumber: 'some-flight-number', airplaneId: some-airplaneId (10), departureAirportId: 'some-airplane-code', arrivalAirportId: 'some-airplane-code',
+ departureTime: 'some-date', arrivalTime: 'some-time', price: some-price (1200), boardingGate: 'some-gate-name', totalSeats: some-seat-capacity (100) }
 */
 async function createFlight(req, res)
 {
@@ -17,7 +18,7 @@ async function createFlight(req, res)
             airplaneId: req.body.airplaneId,
             departureAirportId: req.body.departureAirportId,
             arrivalAirportId: req.body.arrivalAirportId,
-            departureTime: req.body.departureAirportId,
+            departureTime: req.body.departureTime,
             arrivalTime: req.body.arrivalTime,
             price: req.body.price,
             boardingGate: req.body.boardingGate,

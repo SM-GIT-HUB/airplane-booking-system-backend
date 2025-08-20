@@ -25,8 +25,9 @@ class CrudService {
                         explanation.push(e.message);
                     })
                 }
-                else if (err.sqlMessage) {
-                    explanation.push(err.sqlMessage);
+
+                if (err.parent) {
+                    explanation.push(err.parent);
                 }
                 
                 throw new AppError(explanation, StatusCodes.BAD_REQUEST);
@@ -78,6 +79,10 @@ class CrudService {
                     err.errors.forEach((e) => {
                         explanation.push(e.message);
                     })
+                }
+                
+                if (err.parent) {
+                    explanation.push(err.parent);
                 }
                 
                 throw new AppError(explanation, StatusCodes.BAD_REQUEST);
