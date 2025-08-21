@@ -1,11 +1,11 @@
 
 class ErrorResponse {
-    constructor()
+    constructor(message, err)
     {
         this.success = false;
-        this.message = "Something went wrong";
+        this.message = message? message : "Something went wrong";
         this.data = {};
-        this.error = {};
+        this.error = err? err : {};
     }
 }
 

@@ -10,6 +10,7 @@ const bodyContains = [
 
 const bodyContainsDates = ["departureTime", "arrivalTime"];
 const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+const errorStringCreate = "Something went wrong while creating flight";
 
 function validateDates(req, res)
 {
@@ -19,20 +20,14 @@ function validateDates(req, res)
     {
         if (!req.body[dstring] || !dateRegex.test(req.body[dstring]) || isNaN(times[dstring].getTime()))
         {
-            const errorResponse = new ErrorResponse();
-            errorResponse.message = "Something went wrong while creating flight";
-            errorResponse.error = new AppError([`${dstring} not found or invalid in the request`], StatusCodes.BAD_REQUEST);
-            
+            const errorResponse = new ErrorResponse(errorStringCreate, new AppError([`${dstring} not found or invalid in the request`], StatusCodes.BAD_REQUEST));
             return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
         }
     }
     
     if (times.departureTime.getTime() >= times.arrivalTime.getTime())
     {
-        const errorResponse = new ErrorResponse();
-        errorResponse.message = "Something went wrong while creating flight";
-        errorResponse.error = new AppError(["departureTime must be before arrivalTime"], StatusCodes.BAD_REQUEST);
-        
+        const errorResponse = new ErrorResponse(errorStringCreate, new AppError(["departureTime must be before arrivalTime"], StatusCodes.BAD_REQUEST));
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
     }
 }
@@ -46,11 +41,7 @@ function validateContents(req, res)
 
         if (check1 || check2)
         {
-            const errorResponse = new ErrorResponse();
-            errorResponse.message = "Something went wrong while creating flight";
-
-            errorResponse.error = new AppError([`${obj.key} ${check2? "invalid" : "not found"} in the request`], StatusCodes.BAD_REQUEST);
-
+            const errorResponse = new ErrorResponse(errorStringCreate, new AppError([`${obj.key} ${check2? "invalid" : "not found"} in the request`], StatusCodes.BAD_REQUEST));
             return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
         }
     }
@@ -60,10 +51,7 @@ function validateCreateRequest(req, res, next)
 {
     if (!req.body)
     {
-        const errorResponse = new ErrorResponse();
-        errorResponse.message = "Something went wrong while creating flight";
-        errorResponse.error = new AppError(["request body not found in the request"], StatusCodes.BAD_REQUEST);
-
+        const errorResponse = new ErrorResponse(errorStringCreate, new AppError(["request body not found in the request"], StatusCodes.BAD_REQUEST));
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
     }
 
