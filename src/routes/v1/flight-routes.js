@@ -4,7 +4,7 @@ const { FlightMiddlewares } = require('../../middlewares')
 
 const router = express.Router();
 
-router.get('/', FlightController.getFlights); // /api/v1/flights?trips=RPR-BAT GET
+router.get('/', FlightController.getFlights); // /api/v1/flights?trips=city-city&price=mini-maxi&travellers=10 GET
 
 router.get('/:id', FlightController.getFlight); // /api/v1/flights/:id GET
 

@@ -40,7 +40,7 @@ async function createFlight(req, res)
 }
 
 /*
- GET: /flights
+ GET: /flights?trips=bat-rpt&price=3000
  req-body {}
 */
 async function getFlights(req, res)

@@ -28,6 +28,17 @@ class FlightService extends CrudService {
             filter.price = { [Op.between]: [minPrice, maxPrice? maxPrice : 20000] };
         }
 
+        if (query.travellers) {
+            filter.totalSeats = { [Op.gte]: query.travellers };
+        }
+
+        if (query.tripDate)
+        {
+            filter.departureTime = {
+                [Op.between]: [query.tripDate, query.tripDate + " 23:59:00"]
+            }
+        }
+
         try {
             const flights = await flightRepository.getAll(filter);
             return flights;
