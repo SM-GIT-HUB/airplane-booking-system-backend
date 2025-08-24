@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const { Flight } = require('../models')
 const CrudRepository = require('./crud-repository')
 
@@ -8,10 +7,11 @@ class FlightRepository extends CrudRepository {
         super(Flight);
     }
 
-    async getAll(filter)
+    async getAll(filter, sortFilters)
     {
         const res = await Flight.findAll({
-            where: filter
+            where: filter,
+            order: sortFilters
         })
 
         return res;

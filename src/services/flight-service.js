@@ -1,7 +1,10 @@
-const { Op } = require("sequelize");
-const { FlightRepository } = require("../repositories")
+const { Op } = require("sequelize")
 
 const CrudService = require('./crud-service')
+const { FlightRepository } = require("../repositories")
+
+const { StatusCodes } = require("http-status-codes")
+const AppError = require("../utils/errors/app-error")
 
 const flightRepository = new FlightRepository();
 
@@ -14,6 +17,7 @@ class FlightService extends CrudService {
     async getAll(query)
     {
         let filter = {};
+        let sortFilter = [];
 
         if (query.trips)
         {
@@ -39,8 +43,14 @@ class FlightService extends CrudService {
             }
         }
 
+        if (query.sort)
+        {
+            const params = query.sort.split(",");
+            sortFilter = params.map((p) => p.split("_"));
+        }
+
         try {
-            const flights = await flightRepository.getAll(filter);
+            const flights = await flightRepository.getAll(filter, sortFilter);
             return flights;
         }
         catch(err) {
