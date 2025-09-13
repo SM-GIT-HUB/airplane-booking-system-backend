@@ -69,12 +69,12 @@ async function getFlights(req, res)
 async function getFlight(req, res)
 {
     try {
-        const airports = await flightService.get(req.params.id);
+        const flight = await flightService.get(req.params.id);
         
         const successResponse = new SuccessResponse();
 
-        successResponse.message = "Successfully fetched the data of airport";
-        successResponse.data = airports;
+        successResponse.message = "Successfully fetched the data of flight";
+        successResponse.data = flight;
         
         return res.status(StatusCodes.OK).json(successResponse);
     }
