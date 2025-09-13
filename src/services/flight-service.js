@@ -57,6 +57,17 @@ class FlightService extends CrudService {
             throw new AppError(`Cannot fetch data of all flights: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
+
+    async updateSeats(data)
+    {
+        try {
+            const response = await flightRepository.updateRemainingSeats(data.flightId, data.seats, data.dec);
+            return response;
+        }
+        catch(err) {
+            throw new AppError(`Could not update number of seats: ${err.message}`, StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
 

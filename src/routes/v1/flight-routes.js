@@ -10,9 +10,11 @@ router.get('/:id', FlightController.getFlight); // /api/v1/flights/:id GET
 
 router.post('/', FlightMiddlewares.validateCreateRequest, FlightController.createFlight); // /api/v1/flights POST
 
-router.patch('/:id', FlightMiddlewares.validateUpdateRequest, FlightController.updateFlight); // /api/v1/flights/:id PATCH
+router.patch('/:id/seats', FlightMiddlewares.validateUpdateSeatsRequest, FlightController.updateSeats); // /api/v1/flights/id/seats PATCH
 
-router.delete('/:id', FlightController.deleteFlight); // /api/v1/flights/:id DELETE
+// router.patch('/:id', FlightMiddlewares.validateUpdateRequest, FlightController.updateFlight); // /api/v1/flights/:id PATCH
+
+// router.delete('/:id', FlightController.deleteFlight); // /api/v1/flights/:id DELETE
 
 
 module.exports = router

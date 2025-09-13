@@ -137,11 +137,35 @@ async function deleteFlight(req, res)
     }
 }
 
+async function updateSeats(req, res)
+{
+    try {
+        const response = await flightService.updateSeats({
+            flightId: req.params.id,
+            seats: req.body.seats,
+            dec: req.body.dec
+        })
+
+        const successResponse = new SuccessResponse();
+        
+        successResponse.message = "Successfully updated the number of seats";
+        successResponse.data = response;
+
+        return res.status(StatusCodes.OK).json(successResponse);
+    }
+    catch(err) {
+        const errorResponse = new ErrorResponse();
+        errorResponse.error = err;
+        return res.status(err.statusCode).json(errorResponse);
+    }
+}
+
 
 module.exports = {
     createFlight,
     getFlights,
     getFlight,
     updateFlight,
-    deleteFlight
+    deleteFlight,
+    updateSeats
 }

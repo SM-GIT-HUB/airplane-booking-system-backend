@@ -10,7 +10,6 @@ const bodyContains = [
 
 const bodyContainsDates = ["departureTime", "arrivalTime"];
 const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
-const errorStringCreate = "Something went wrong while creating flight";
 
 function validateDates(req, res)
 {
@@ -49,6 +48,8 @@ function validateContents(req, res)
 
 function validateCreateRequest(req, res, next)
 {
+    const errorStringCreate = "Something went wrong while creating flight";
+
     if (!req.body)
     {
         const errorResponse = new ErrorResponse(errorStringCreate, new AppError(["request body not found in the request"], StatusCodes.BAD_REQUEST));
@@ -67,8 +68,34 @@ function validateUpdateRequest(req, res, next)
 
 }
 
+function validateUpdateSeatsRequest(req, res, next)
+{
+    const errorStringCreate = "Something went wrong while updating flight";
+
+    if (!req.body)
+    {
+        const errorResponse = new ErrorResponse(errorStringCreate, new AppError(["request body not found in the request"], StatusCodes.BAD_REQUEST));
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+
+    if (!req.body.seats || isNaN(req.body.seats))
+    {
+        const errorResponse = new ErrorResponse(errorStringCreate, new AppError([`seats not found or invalid in the request`], StatusCodes.BAD_REQUEST));
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+
+    if (req.body.dec && isNaN(req.body.dec))
+    {
+        const errorResponse = new ErrorResponse(errorStringCreate, new AppError([`dec is invalid in the request`], StatusCodes.BAD_REQUEST));
+        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+    }
+    
+    next();
+}
+
 
 module.exports = {
     validateCreateRequest,
-    validateUpdateRequest
+    validateUpdateRequest,
+    validateUpdateSeatsRequest
 }
