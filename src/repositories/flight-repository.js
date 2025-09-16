@@ -1,7 +1,9 @@
 const db = require("../models")
 
 const CrudRepository = require('./crud-repository')
-const { Flight, Airplane, Airport, City } = require('../models')
+const { Flight, Airplane, Airport, City } = require('../models');
+const AppError = require("../utils/errors/app-error");
+const { StatusCodes } = require("http-status-codes");
 
 class FlightRepository extends CrudRepository {
     constructor()
@@ -34,6 +36,10 @@ class FlightRepository extends CrudRepository {
 
             if (!flight) {
                 throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND);
+            }
+
+            if (parseInt(dec) && flight.totalSeats < seats) {
+                throw new AppError("Not enough seats available", StatusCodes.NOT_FOUND);
             }
 
             if (parseInt(dec)) {
